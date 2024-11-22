@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Meta tags and dependencies -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payroll Calculator</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-..."
+      crossorigin="anonymous"
+    />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Payroll Calculator</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="#"
+                id="nav-home"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="nav-employees">Employees</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="nav-shifts">Shifts</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="nav-daily-summary"
+                >Daily Summary</a
+              >
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="nav-calculate">Calculate Pay</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <div class="container mt-4" id="main-content">
+      <!-- Content will be dynamically loaded here -->
+      <div id="home-page">
+        <h1>Welcome to the Payroll Calculator</h1>
+        <p>
+          Use the navigation menu to manage employees, shifts, and calculate
+          pay.
+        </p>
+      </div>
+    </div>
+
+    <!-- Modals -->
+    <!-- Employee Modal -->
+    <div
+      class="modal fade"
+      id="employeeModal"
+      tabindex="-1"
+      aria-labelledby="employeeModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form id="employee-form">
+            <div class="modal-header">
+              <h5 class="modal-title" id="employeeModalLabel">Add Employee</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <!-- Form Fields -->
+              <div class="mb-3">
+                <label for="employee-name" class="form-label">Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="employee-name"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="employee-rate1" class="form-label">Rate 1</label>
+                <input
+                  type="number"
+                  step="0.0001"
+                  class="form-control"
+                  id="employee-rate1"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="employee-rate2" class="form-label">Rate 2</label>
+                <input
+                  type="number"
+                  step="0.0001"
+                  class="form-control"
+                  id="employee-rate2"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="employee-rate3" class="form-label">Rate 3</label>
+                <input
+                  type="number"
+                  step="0.0001"
+                  class="form-control"
+                  id="employee-rate3"
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">
+                Save Employee
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shift Modal -->
+    <div
+      class="modal fade"
+      id="shiftModal"
+      tabindex="-1"
+      aria-labelledby="shiftModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form id="shift-form">
+            <div class="modal-header">
+              <h5 class="modal-title" id="shiftModalLabel">Add Shift</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <!-- Form Fields -->
+              <div class="mb-3">
+                <label for="shift-employee" class="form-label">Employee</label>
+                <select class="form-select" id="shift-employee" required>
+                  <!-- Employee options will be loaded here -->
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="shift-date" class="form-label">Date</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="shift-date"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="shift-type" class="form-label">Shift Type</label>
+                <select class="form-select" id="shift-type" required>
+                  <!-- Shift type options -->
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="shift-pay-rate" class="form-label">Pay Rate</label>
+                <select class="form-select" id="shift-pay-rate" required>
+                  <option value="RATE_1">Rate 1</option>
+                  <option value="RATE_2">Rate 2</option>
+                  <option value="RATE_3">Rate 3</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="shift-special" class="form-label">Special</label>
+                <select class="form-select" id="shift-special" required>
+                  <option value="NO">No</option>
+                  <option value="YES">Yes</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="shift-start-time" class="form-label"
+                  >Start Time</label
+                >
+                <input
+                  type="time"
+                  class="form-control"
+                  id="shift-start-time"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="shift-finish-time" class="form-label"
+                  >Finish Time</label
+                >
+                <input
+                  type="time"
+                  class="form-control"
+                  id="shift-finish-time"
+                  required
+                />
+              </div>
+              <!-- Breaks Section -->
+              <div class="mb-3">
+                <label class="form-label">Breaks</label>
+                <div id="breaks-container">
+                  <!-- Break inputs will be added here -->
+                </div>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-secondary"
+                  id="add-break-btn"
+                >
+                  Add Break
+                </button>
+              </div>
+              <!-- VOT Section -->
+              <div class="mb-3">
+                <label class="form-label">Voluntary Overtime (VOT)</label>
+                <div id="vots-container">
+                  <!-- VOT inputs will be added here -->
+                </div>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-secondary"
+                  id="add-vot-btn"
+                >
+                  Add VOT
+                </button>
+              </div>
+
+              <!-- FAT Section -->
+              <div class="mb-3">
+                <label class="form-label">Fatigue Breaks (FAT)</label>
+                <div id="fats-container">
+                  <!-- FAT inputs will be added here -->
+                </div>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-secondary"
+                  id="add-fat-btn"
+                >
+                  Add FAT
+                </button>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Save Shift</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loading-spinner" class="d-none text-center">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
+    <!-- Error Alert -->
+    <div id="error-alert" class="alert alert-danger d-none" role="alert">
+      An error occurred.
+    </div>
+
+    <!-- Include Bootstrap JS and Custom JS here -->
+    <!-- Bootstrap JS Bundle (includes Popper) -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-..."
+      crossorigin="anonymous"
+    ></script>
+    <!-- Custom JS -->
+    <script src="js/app.js"></script>
+  </body>
+</html>
